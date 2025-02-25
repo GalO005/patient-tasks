@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "poetry add $(cat requirements-txt)"
+version = "0.1.0"
+description = ""
+authors = ["Gal Oz <galoz05@gmail.com>"]
+readme = "README.md"
+packages = [{include = "poetry add $(cat requirements"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^2.10.6"
+pytest = "^8.3.4"
+tinydb = "^4.8.2"
+tinydb-serialization = "^2.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
