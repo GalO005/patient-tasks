@@ -1,4 +1,4 @@
-
+from collections import defaultdict
 from models.patient_task import PatientTask
 from .abstract_patient_request_service import PatientRequestService
 from typing import NewType
@@ -12,4 +12,9 @@ PatientToGroupedDepartmentTasks = dict[str, DepartmentToPatientTasks]
 class DepartmentPatientRequestService(PatientRequestService):
 
     def update_requests(self, tasks: list[PatientTask]):
-        raise NotImplementedError
+
+        grouped_tasks: PatientToGroupedDepartmentTasks = defaultdict(
+            lambda: defaultdict(list))
+        
+        for task in tasks:
+            grouped_tasks[task.patient_id][task.assigned_to].append(task)
