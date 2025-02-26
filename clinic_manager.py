@@ -24,6 +24,18 @@ class ClinicManager:
         newly_closed_tasks = [t for t in tasks if t.status == 'Closed']
 
         # Question: What is a potential performance issue with this code ?
+        # Answer: There are several potential performance issues here:
+        # 1. list(self.task_service.get_open_tasks()) loads ALL open tasks from the database,
+        #    even though we only need tasks related to the patients in the current update.
+        #    This can be very inefficient with millions of patients.
+        # 2. The concatenation of open_tasks + newly_closed_tasks might contain duplicate tasks
+        #    if a task was both opened and closed in the same update.
+        # 3. Loading all open tasks into memory at once can cause memory pressure with large datasets.
+        # 
+        # Better approach would be to:
+        # 1. Only load open tasks for patients affected by the current update
+        # 2. Use a set to deduplicate tasks
+        # 3. Use batching or streaming for large datasets
         open_tasks = list(self.task_service.get_open_tasks())
 
         self.patient_request_service.update_requests(
