@@ -1,6 +1,5 @@
 from collections import defaultdict
 
-from uuid import uuid4
 
 from tinydb import where
 from models.patient_task import PatientTask
